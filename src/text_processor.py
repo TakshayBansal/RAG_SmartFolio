@@ -1,16 +1,18 @@
-from typing import List, Dict
-import numpy as np
+from typing import List, Dict, Optional
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from .embeddings import LocalEmbeddings
 
 class TextProcessor:
     """Handles text chunking and embedding generation"""
-    
-    def __init__(self, 
-                 chunk_size: int = 1000,
-                 chunk_overlap: int = 200):
-        self.embeddings = LocalEmbeddings()
+
+    def __init__(
+        self,
+        chunk_size: int = 1000,
+        chunk_overlap: int = 200,
+        embeddings: Optional[LocalEmbeddings] = None,
+    ) -> None:
+        self.embeddings = embeddings
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
@@ -29,6 +31,8 @@ class TextProcessor:
     
     def create_embeddings(self, texts: List[str]) -> List[List[float]]:
         """Generate embeddings for a list of texts"""
+        if self.embeddings is None:
+            self.embeddings = LocalEmbeddings()
         return self.embeddings.embed_documents(texts)
     
     def process_document(self, text: str, metadata: Dict = None) -> Dict:

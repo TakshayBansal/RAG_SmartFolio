@@ -4,15 +4,22 @@ import chromadb
 from chromadb.config import Settings
 from .embeddings import LocalEmbeddings
 
+
 class VectorStore:
     """Manages the vector database for document storage and retrieval"""
-    
-    def __init__(self, persist_directory: str = "./data/vectorstore"):
+
+    def __init__(
+        self,
+        persist_directory: str = "./data/vectorstore",
+        embedding_model_name: str = "Alibaba-NLP/gte-base-en-v1.5",
+    ) -> None:
         self.persist_directory = persist_directory
         self.collection_name = "financial_documents"
-        
-        # Initialize embeddings
-        self.embeddings = LocalEmbeddings()
+
+        # Initialize embeddings with configurable model
+        self.embeddings = LocalEmbeddings(
+            model_name=embedding_model_name,
+        )
         
         # Initialize ChromaDB client
         self.client = chromadb.Client(Settings(
