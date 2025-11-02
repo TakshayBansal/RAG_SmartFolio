@@ -1,0 +1,12 @@
+langchain>=0.0.350
+pypdf>=3.17.1
+python-dotenv>=1.0.0
+chromadb>=0.4.18
+pandas>=2.1.3
+numpy>=1.26.2
+transformers>=4.35.2
+torch>=2.1.1
+scikit-learn>=1.3.2
+finance-datareader>=0.9.50
+beautifulsoup4>=4.12.2
+sentence-transformers>=2.2.2
